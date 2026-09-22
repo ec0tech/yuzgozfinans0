@@ -1,1 +1,696 @@
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YüzGözFinans — Parana yüzgöz ol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #10151f;
+    --bg-raised: #161c2b;
+    --bg-raised-2: #1b2233;
+    --border-hairline: #262e40;
+    --text-primary: #f2efe7;
+    --text-secondary: #9aa3b6;
+    --text-muted: #666f83;
+    --accent: #e8a33d;
+    --accent-soft: rgba(232, 163, 61, 0.14);
+    --accent-dim: #b9812d;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  img, svg { max-width: 100%; display: block; }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* focus visibility */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  /* ---------------- NAV ---------------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(16, 21, 31, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .brand .mark { width: 26px; height: 26px; }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-links a.tool-link {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .nav-toggle { display: none; }
+
+  /* ---------------- HERO ---------------- */
+  .hero {
+    padding: 88px 0 96px;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid rgba(232, 163, 61, 0.28);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(40px, 5.4vw, 64px);
+    line-height: 1.06;
+    margin: 0 0 22px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero p.lede {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 46ch;
+    margin: 0 0 34px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #1a1305;
+  }
+  .btn-primary:hover { background: #f0ae4c; }
+
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--border-hairline);
+    color: var(--text-primary);
+  }
+  .btn-ghost:hover { border-color: var(--text-secondary); }
+
+  /* hero visual */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .aperture { width: 220px; height: 220px; }
+
+  .stat-card {
+    width: 100%;
+    background: var(--bg-raised);
+    border: 1px solid var(--border-hairline);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+
+  .stat-card .stat-label {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .stat-card .stat-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-family: var(--mono);
+  }
+
+  .stat-card .stat-num {
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .stat-card .stat-num.down { color: #d97757; }
+
+  .stat-card .stat-note {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-family: var(--sans);
+  }
+
+  /* ---------------- SECTION SHARED ---------------- */
+  section.block {
+    padding: 88px 0;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .eyebrow-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 44px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .block h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 32px;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .block .block-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 40ch;
+  }
+
+  /* ---------------- PURPOSE ---------------- */
+  .purpose-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border-hairline);
+  }
+
+  .purpose-list li {
+    padding: 28px 28px 28px 0;
+    border-left: 1px solid var(--border-hairline);
+    padding-left: 24px;
+  }
+
+  .purpose-list li:first-child { padding-left: 0; border-left: none; }
+
+  .purpose-list .p-title {
+    font-weight: 700;
+    font-size: 15.5px;
+    margin-bottom: 8px;
+  }
+
+  .purpose-list .p-body {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ---------------- FINANS 101 (ledger style) ---------------- */
+  .ledger {
+    border-top: 1px solid var(--border-hairline);
+  }
+
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 24px;
+    align-items: start;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .ledger-row .l-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-top: 4px;
+  }
+
+  .ledger-row .l-title {
+    font-weight: 700;
+    font-size: 17px;
+    margin: 0 0 8px;
+  }
+
+  .ledger-row .l-body {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    max-width: 62ch;
+  }
+
+  .ledger-row .l-status {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+
+  /* ---------------- GÜNDEM SÜZGECİ (funnel) ---------------- */
+  .funnel-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border-hairline);
+    border-radius: 16px;
+    padding: 40px;
+  }
+
+  .funnel-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-bottom: 32px;
+  }
+
+  .funnel-step {
+    text-align: center;
+    position: relative;
+    padding: 0 12px;
+  }
+
+  .funnel-step .f-bar {
+    height: 6px;
+    background: var(--border-hairline);
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+
+  .funnel-step:nth-child(1) .f-bar { background: var(--text-muted); }
+  .funnel-step:nth-child(2) .f-bar { background: var(--accent-dim); }
+  .funnel-step:nth-child(3) .f-bar { background: var(--accent); }
+
+  .funnel-step .f-label {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .funnel-step .f-value {
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+
+  .funnel-card h3 {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .funnel-card p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin: 0;
+    max-width: 68ch;
+  }
+
+  .funnel-note {
+    margin-top: 22px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ---------------- ANALİZ CTA ---------------- */
+  .analiz-cta {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+    background: linear-gradient(160deg, var(--bg-raised) 0%, var(--bg-raised-2) 100%);
+    border: 1px solid var(--border-hairline);
+    border-radius: 20px;
+    padding: 52px;
+  }
+
+  .analiz-cta h2 { margin-bottom: 14px; }
+
+  .analiz-cta p {
+    color: var(--text-secondary);
+    font-size: 15.5px;
+    max-width: 46ch;
+    margin: 0 0 28px;
+  }
+
+  .analiz-tool-list {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .analiz-tool-list li {
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .analiz-tool-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .analiz-visual {
+    background: var(--bg-base);
+    border: 1px solid var(--border-hairline);
+    border-radius: 14px;
+    padding: 26px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .analiz-visual .av-line { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed var(--border-hairline); }
+  .analiz-visual .av-line:last-child { border-bottom: none; }
+  .analiz-visual .av-line span:last-child { color: var(--text-primary); }
+
+  /* ---------------- FOOTER ---------------- */
+  footer {
+    padding: 44px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .footer-inner a { color: var(--text-secondary); text-decoration: none; }
+  .footer-inner a:hover { color: var(--text-primary); }
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { max-width: 340px; margin: 0 auto; }
+    .purpose-list { grid-template-columns: 1fr; }
+    .purpose-list li { border-left: none; padding-left: 0; border-top: 1px solid var(--border-hairline); padding-top: 24px; }
+    .purpose-list li:first-child { border-top: none; padding-top: 0; }
+    .funnel-steps { grid-template-columns: 1fr; gap: 16px; }
+    .analiz-cta { grid-template-columns: 1fr; padding: 32px; }
+    .ledger-row { grid-template-columns: 40px 1fr; }
+    .ledger-row .l-status { grid-column: 2; }
+    .wrap { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">
+      <svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="21" stroke="#E8A33D" stroke-width="1.4"/>
+        <circle cx="24" cy="24" r="13" stroke="#E8A33D" stroke-width="1.4" stroke-opacity="0.6"/>
+        <circle cx="24" cy="24" r="4" fill="#E8A33D"/>
+        <g stroke="#E8A33D" stroke-width="1.4" stroke-opacity="0.8">
+          <line x1="24" y1="1.5" x2="24" y2="7.5"/>
+          <line x1="24" y1="40.5" x2="24" y2="46.5"/>
+          <line x1="1.5" y1="24" x2="7.5" y2="24"/>
+          <line x1="40.5" y1="24" x2="46.5" y2="24"/>
+        </g>
+      </svg>
+      YüzGözFinans
+    </a>
+    <ul class="nav-links">
+      <li><a href="#amac">Amaç</a></li>
+      <li><a href="#finans101">Finans 101</a></li>
+      <li><a href="#gundem">Gündem Süzgeci</a></li>
+      <li><a href="https://yuzgozfinans-cnekuqvmft3wmxnld2imn4.streamlit.app" class="tool-link" target="_blank" rel="noopener">YüzGözAnaliz →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-tag">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><circle cx="7" cy="7" r="1.6" fill="currentColor"/></svg>
+        Tavsiye değil, anlatı
+      </span>
+      <h1>Parana yüzgöz ol.</h1>
+      <p class="lede">
+        Enflasyon, faiz, küresel gündem — bunların hepsi paranı sessizce
+        şekillendiriyor. YüzGözFinans, mekanizmayı sade bir dille anlatır;
+        ne alacağını söylemez, nasıl işlediğini gösterir.
+      </p>
+      <div class="hero-actions">
+        <a href="#finans101" class="btn btn-primary">Finans 101'e başla</a>
+        <a href="https://yuzgozfinans-cnekuqvmft3wmxnld2imn4.streamlit.app" class="btn btn-ghost" target="_blank" rel="noopener">YüzGözAnaliz'i dene</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <svg class="aperture" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="110" cy="110" r="95" stroke="#262E40" stroke-width="1"/>
+        <circle cx="110" cy="110" r="72" stroke="#E8A33D" stroke-width="1.2" stroke-opacity="0.55"/>
+        <circle cx="110" cy="110" r="46" stroke="#E8A33D" stroke-width="1.2"/>
+        <circle cx="110" cy="110" r="6" fill="#E8A33D"/>
+        <g stroke="#E8A33D" stroke-opacity="0.7" stroke-width="1.1">
+          <line x1="110" y1="8" x2="110" y2="24"/>
+          <line x1="110" y1="196" x2="110" y2="212"/>
+          <line x1="8" y1="110" x2="24" y2="110"/>
+          <line x1="196" y1="110" x2="212" y2="110"/>
+          <line x1="42" y1="42" x2="53" y2="53"/>
+          <line x1="167" y1="167" x2="178" y2="178"/>
+          <line x1="178" y1="42" x2="167" y2="53"/>
+          <line x1="53" y1="167" x2="42" y2="178"/>
+        </g>
+      </svg>
+
+      <div class="stat-card">
+        <div class="stat-label">100.000 TL, %35 yıllık enflasyonda</div>
+        <div class="stat-row">
+          <span>5 yıl sonra</span>
+          <span class="stat-num down">21.900 TL</span>
+        </div>
+        <div class="stat-note">Reel alım gücü — YüzGözAnaliz'deki hesaplayıcıdan üretildi.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="block" id="amac">
+  <div class="wrap">
+    <div class="eyebrow-row">
+      <h2>Neden YüzGözFinans</h2>
+      <p class="block-desc">Bir portfolyo projesi olarak başladı, bir okuma alışkanlığı olarak devam ediyor.</p>
+    </div>
+    <ul class="purpose-list">
+      <li>
+        <div class="p-title">Manipülasyonsuz eğitim</div>
+        <div class="p-body">Hiçbir yazı "al" ya da "sat" demez. Sadece bir olayın parana nasıl bir mekanizmayla dokunduğunu anlatır.</div>
+      </li>
+      <li>
+        <div class="p-title">Python destekli araçlar</div>
+        <div class="p-body">Hesaplayıcılar gerçek formüllerle çalışır — Akbank AI Business School'da öğrenilen temellerin canlı örneği.</div>
+      </li>
+      <li>
+        <div class="p-title">Sürekli genişleyen içerik</div>
+        <div class="p-body">Bu bir bitmiş ürün değil, açık bir defter. Her hafta yeni bir kavram ya da gündem notu ekleniyor.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="block" id="finans101">
+  <div class="wrap">
+    <div class="eyebrow-row">
+      <h2>Finans 101</h2>
+      <p class="block-desc">Temel kavramlar, en sade haliyle.</p>
+    </div>
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="l-num">01</div>
+        <div>
+          <div class="l-title">Enflasyon nedir?</div>
+          <div class="l-body">Fiyatlar neden sürekli artar ve bu, elindeki paranın satın alma gücünü nasıl aşındırır — somut bir örnekle.</div>
+        </div>
+        <div class="l-status">Yayında</div>
+      </div>
+      <div class="ledger-row">
+        <div class="l-num">02</div>
+        <div>
+          <div class="l-title">Bileşik getiri nedir?</div>
+          <div class="l-body">Küçük bir birikimin zamanla nasıl katlanarak büyüdüğü — ve aynı mantığın borç tarafında neden aleyhine işlediği.</div>
+        </div>
+        <div class="l-status">Yayında</div>
+      </div>
+      <div class="ledger-row">
+        <div class="l-num">03</div>
+        <div>
+          <div class="l-title">Faiz nasıl belirlenir?</div>
+          <div class="l-body">Merkez bankalarının faiz kararları, günlük hayata hangi yollardan sızar.</div>
+        </div>
+        <div class="l-status">Yakında</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="gundem">
+  <div class="wrap">
+    <div class="eyebrow-row">
+      <h2>Gündem Süzgeci</h2>
+      <p class="block-desc">Ham haberi değil, mekanizmasını okursun.</p>
+    </div>
+    <div class="funnel-card">
+      <div class="funnel-steps">
+        <div class="funnel-step">
+          <div class="f-bar"></div>
+          <div class="f-label">Ham haber</div>
+          <div class="f-value">Çip üretiminde aksama</div>
+        </div>
+        <div class="funnel-step">
+          <div class="f-bar"></div>
+          <div class="f-label">Mekanizma</div>
+          <div class="f-value">Otomotiv üretim zinciri yavaşlar</div>
+        </div>
+        <div class="funnel-step">
+          <div class="f-bar"></div>
+          <div class="f-label">Sana yansıması</div>
+          <div class="f-value">İkinci el araç fiyatları yükselir</div>
+        </div>
+      </div>
+      <h3>Haftanın vakası: çip krizi ve otomotiv</h3>
+      <p>Uzak Doğu'daki yarı iletken üretim aksamalarının, üretim bandından senin cebine kadar izlediği yol — tavsiye yok, sadece zincir.</p>
+      <div class="funnel-note">Yeni vakalar her hafta eklenir.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="border-bottom: none;">
+  <div class="wrap">
+    <div class="analiz-cta">
+      <div>
+        <span class="hero-tag">Canlı araç</span>
+        <h2>YüzGözAnaliz'de kendi senaryonu kur</h2>
+        <p>Python ile yazılmış interaktif hesaplayıcılar; tutarını, enflasyon
+          varsayımını ve süreni gir, alım gücünün yıllara göre nasıl
+          değiştiğini grafikte gör.</p>
+        <ul class="analiz-tool-list">
+          <li>Enflasyon karşısında alım gücü hesaplayıcı</li>
+          <li>Yıllara yayılan reel değer grafiği</li>
+          <li>Yeni araçlar düzenli olarak ekleniyor</li>
+        </ul>
+        <a href="https://yuzgozfinans-cnekuqvmft3wmxnld2imn4.streamlit.app" class="btn btn-primary" target="_blank" rel="noopener">YüzGözAnaliz'i aç</a>
+      </div>
+      <div class="analiz-visual">
+        <div class="av-line"><span>Başlangıç tutarı</span><span>10.000 TL</span></div>
+        <div class="av-line"><span>Yıllık enflasyon</span><span>%40</span></div>
+        <div class="av-line"><span>Süre</span><span>5 yıl</span></div>
+        <div class="av-line"><span>Reel alım gücü</span><span>1.857 TL</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>YüzGözFinans — eğitim amaçlı portfolyo projesi.</span>
+    <span><a href="https://yuzgozfinans-cnekuqvmft3wmxnld2imn4.streamlit.app" target="_blank" rel="noopener">YüzGözAnaliz</a> · Akbank AI Business School, Introduction to Python</span>
+  </div>
+</footer>
+
+</body>
+</html>
